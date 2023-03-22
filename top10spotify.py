@@ -1,23 +1,28 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+while True:
+    # Ingresar las credenciales de tu aplicación de Spotify
+    client_id = 'TU_CLIENT_ID'
+    client_secret = 'TU_CLIENT_SECRET'
 
-# Autenticación de la API de Spotify
-client_id = 'ID_de_cliente'
-client_secret = 'ID_secreto'
-client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    # Autenticar con Spotify
+    client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-# Búsqueda del artista
-artist_name = 'juice wrld'
-result = sp.search(artist_name, type='artist')
+    # Buscar canciones por artista
+    artista = input("Escribe el nombre del artista tal cual como aparece en spotify: \n")
+    results = sp.search(q='artist:' + artista, type='track')
 
-# Obtiene el id del artista
-artist_id = result['artists']['items'][0]['id']
+    # Mostrar los resultados
+    print("Canciones del artista", artista, ":")
+    for i, track in enumerate(results['tracks']['items'], start=1):
+        print(f"{i}. {track['name']}")
 
-# Obtiene las canciones más escuchadas del artista
-top_tracks = sp.artist_top_tracks(artist_id, country='CO')
+    print('\n Las 10 canciones más escuchadas de hoy son: \n')
 
-# Imprime las 10 canciones más escuchadas del artista
-print(f"Las 10 canciones más escuchadas de {artist_name} son:")
-for track in top_tracks['tracks'][:10]:
-    print(f"- {track['name']}")
+    # Obtener las 10 canciones más escuchadas hoy
+    top_tracks = sp.playlist_tracks('37i9dQZEVXbMDoHDwVN2tF')
+
+    # Mostrar los resultados
+    for i, track in enumerate(top_tracks['items'][:10], start=1):
+        print(f"{i}. {track['track']['name']} - {track['track']['artists'][0]['name']}")
