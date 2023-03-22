@@ -2,8 +2,8 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 # Autenticación de la API de Spotify
-client_id = 'f197b78781b24e389ed6b150642dd57c'
-client_secret = 'f96b8432991146eabba9e7e9c2dffa83'
+client_id = 'ID_de_cliente'
+client_secret = 'ID_secreto'
 client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
@@ -15,7 +15,7 @@ result = sp.search(artist_name, type='artist')
 artist_id = result['artists']['items'][0]['id']
 
 # Obtiene las canciones más escuchadas del artista
-top_tracks = sp.artist_top_tracks(artist_id, country='US')
+top_tracks = sp.artist_top_tracks(artist_id, country='CO')
 
 # Imprime las 10 canciones más escuchadas del artista
 print(f"Las 10 canciones más escuchadas de {artist_name} son:")
